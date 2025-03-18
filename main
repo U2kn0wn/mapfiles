@@ -1,0 +1,63 @@
+#!/bin/bash
+
+
+url=""
+jsfile=""
+output=""
+
+# Parse command-line arguments
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -url)
+      if [ -n "$2" ] && [ "${2#-}" != "$2" ]; then
+        echo "Error: -url requires a value."
+        exit 1
+      fi
+      url="$2"
+      shift 2
+      ;;
+    -js)
+      if [ -n "$2" ] && [ "${2#-}" != "$2" ]; then
+        echo "Error: -js requires a value."
+        exit 1
+      fi
+      jsfile="$2"
+      shift 2
+      ;;
+    -o)
+      if [ -n "$2" ] && [ "${2#-}" != "$2" ]; then
+        echo "Error: -o requires a value."
+        exit 1
+      fi
+      output="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown parameter: $1"
+      exit 1
+      ;;
+  esac
+done
+
+# Check if variables are empty
+if [ -z "$url" ] || [ -z "$jsfile" ] || [ -z "$output" ]; then
+  echo "Usage: $0 -url \"url\" -js \"jsfile\" -o \"output_file\""
+  exit 1
+fi
+
+echo "finding js links"
+echo "$url"
+echo "$jsfile"
+echo "$output"
+
+echo "______________________________"
+
+./getJS -url $url | tee ./$jsfile
+
+
+if [[ -z "$output" ]]; then
+  ./mapfiles.sh ./$jsfile
+else
+  ./mapfiles.sh ./$jsfile | tee $output
+fi
+
