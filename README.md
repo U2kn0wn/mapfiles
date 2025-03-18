@@ -1,6 +1,6 @@
 # Installing
 It is a pretty much plug and play code, if it is showing errors try installing getJS first
-Here is the link to getJS [[https://github.com/003random/getJS]]
+Here is the link to getJS https://github.com/003random/getJS
 
 # Usage
 To use it first enter the directory and then type
